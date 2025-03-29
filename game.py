@@ -191,7 +191,8 @@ while running:
                 end_screen(score)
                 score = 0
             else:
-                #score += 1
+                score += 1
+                counter += 1
                 mixer.music.load('Assets/bgm.mp3')
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
                 color_change_interval = max(0, 200 - (score // 2))                
