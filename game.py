@@ -1,6 +1,7 @@
 import random
 import math
 import pygame
+from pygame import mixer
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -13,6 +14,7 @@ BACKGROUND = (240, 240, 240)
 BUTTON_COLOR = (100, 100, 255)
 BUTTON_HOVER_COLOR = (150, 150, 255)
 TEXT_COLOR = (0, 0, 0)
+TITLE_TEXT_COLOR = (255, 255, 255)
 
 game_state = "Menu"
 font = pygame.font.Font(None, 30)
@@ -81,7 +83,7 @@ def end_screen():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
 
-        draw_text("Game Over", title_font, TEXT_COLOR, 230, 100)
+        draw_text("Game Over!", title_font, TEXT_COLOR, 275, 100)
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Play Again?", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
@@ -97,6 +99,9 @@ def end_screen():
 
 def menu_screen():
     """Main menu screen."""
+
+    mixer.music.load('Assets/funky town low quality.mp3')
+    mixer.music.play(-1)
     global game_state
     bg_img = pygame.image.load("Assets/KenSprite1.png")
     bg_img = pygame.transform.scale(bg_img, (WIDTH, HEIGHT))
@@ -106,7 +111,7 @@ def menu_screen():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
 
-        draw_text("Ken's Last Stand", title_font, TEXT_COLOR, 230, 100)
+        draw_text("Ken's Last Stand", title_font, TITLE_TEXT_COLOR, 230, 100)
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Start Game", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
@@ -115,6 +120,8 @@ def menu_screen():
                 pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
+                mixer.music.load('Assets/funky town low quality.mp3')
+                mixer.music.stop
                 game_state = "game"
 
         pygame.display.flip()
