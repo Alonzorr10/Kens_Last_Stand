@@ -32,8 +32,8 @@ class FloatingObject:
         self.float_speed = 0.05
         self.float_amount = 5
         # Load the image
-        self.image = pygame.image.load("Assets/KenSprite1.png")
-        self.image = pygame.transform.scale(self.image, (self.radius * 2, self.radius * 2))
+        #self.image = pygame.image.load("Assets/KenSprite1.png")
+        #self.image = pygame.transform.scale(self.image, (self.radius * 2, self.radius * 2))
     def update(self):
         self.angle += random.uniform(-0.1, 0.1)
         
