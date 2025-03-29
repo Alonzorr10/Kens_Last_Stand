@@ -85,10 +85,13 @@ def end_screen(score):
     global game_state
     global floaters
     global high_score
+    mixer.music.load('Assets/Spongebob.mp3')
+    mixer.music.play(1)
 
     if(score > high_score):
         high_score = score
     while game_state == "End":
+        
         screen.fill(WHITE)
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
@@ -123,6 +126,8 @@ def end_screen(score):
                 game_state = "game"
                 score = 0
                 floaters = [FloatingObject()]
+                mixer.music.load('Assets/bgm.mp3')
+                mixer.music.play(-1)
 
         pygame.display.flip()
         clock.tick(60)
@@ -166,10 +171,10 @@ running = True
 invisible_mode = False
 color_change_time = 0
 color_change_interval = 1000
+mixer.music.load('Assets/bgm.mp3')
+mixer.music.play(-1)
 while running:
     for event in pygame.event.get():
-        mixer.music.load('Assets/bgm.mp3')
-        mixer.music.play(-1)
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -193,7 +198,6 @@ while running:
             else:
                 score += 1
                 counter += 1
-                mixer.music.load('Assets/bgm.mp3')
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
                 color_change_interval = max(0, 200 - (score // 2))                
                 floater.speed += random.uniform(10, 10)
