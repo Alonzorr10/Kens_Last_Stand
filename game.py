@@ -30,26 +30,25 @@ class FloatingObject:
     def update(self):
         self.angle += random.uniform(-0.1, 0.1)
         
-        # Move in current direction
+        
         self.x += math.cos(self.angle) * self.speed
         self.y += math.sin(self.angle) * self.speed
         
-        # Bounce off walls
+        
         if self.x < self.radius or self.x > WIDTH - self.radius:
             self.angle = math.pi - self.angle
         if self.y < self.radius or self.y > HEIGHT - self.radius:
             self.angle = -self.angle
             
         # Floating up and down effect
-        self.float_offset = math.sin(pygame.time.get_ticks() * self.float_speed) * self.float_amount
+        #self.float_offset = math.sin(pygame.time.get_ticks() * self.float_speed) * self.float_amount
         
     def draw(self, surface):
         pygame.draw.circle(surface, BLUE, (int(self.x), int(self.y + self.float_offset)), self.radius)
 
-# Create floating object
 floater = FloatingObject()
 
-# Main game loop
+
 clock = pygame.time.Clock()
 running = True
 
@@ -58,10 +57,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    # Update
+   
     floater.update()
     
-    # Draw
+    
     screen.fill(BACKGROUND)
     floater.draw(screen)
     
