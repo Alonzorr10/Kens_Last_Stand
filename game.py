@@ -11,10 +11,18 @@ pygame.display.set_caption("Ken's Last Stand")
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 BACKGROUND = (240, 240, 240)
+BUTTON_COLOR = (100, 100, 255)
+BUTTON_HOVER_COLOR = (150, 150, 255)
+TEXT_COLOR = (0, 0, 0)
 gradient = random.randrange(5, 11)
 clock = pygame.time.Clock()
 x = 650
 y = 250
+
+game_state = "Menu"
+font = pygame.font.Font(None, 36)
+clock = pygame.time.Clock()
+
 
 class FloatingObject:
     def __init__(self, x = None, y = None):
@@ -45,7 +53,6 @@ class FloatingObject:
 
 floater = FloatingObject()
 
-floaters = []
 
 clock = pygame.time.Clock()
 running = True
