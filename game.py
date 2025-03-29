@@ -66,6 +66,32 @@ def draw_text(text, font, color, x, y):
     img = font.render(text, True, color)
     screen.blit(img, (x, y))
 
+def end_screen():
+    global game_state
+
+    while game_state == "End":
+        screen.fill(WHITE)
+
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
+
+        draw_text("Game Over", title_font, TEXT_COLOR, 230, 100)
+
+        pygame.draw.rect(screen, button_color, button_rect)
+        draw_text("Play Again?", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
+
+        # Event handling
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button_rect.collidepoint(event.pos):
+                    game_state = "game"  # Switch to game state
+
+        pygame.display.flip()
+        clock.tick(60)
+
 def menu_screen():
     global game_state
     bg_img = pygame.image.load("Assets/KenSprite1.png")
@@ -119,10 +145,12 @@ while running:
                         break
 
                 if clicked_object:  # If an object was clicked, end the game
-                    running = False
+                    game_state = "End"
                 else:  # If no object was clicked, create a new object
                     floater = FloatingObject(mouse_pos[0], mouse_pos[1])
                     floaters.append(floater)
+            if game_state == "End":
+                end_screen()
 
     screen.fill(BACKGROUND)
 
