@@ -77,15 +77,30 @@ def draw_text(text, font, color, x, y):
     img = font.render(text, True, color)
     screen.blit(img, (x, y))
 
-def end_screen():
+def end_screen(score):
     """Game over screen with replay option."""
     global game_state
+    global floaters
     while game_state == "End":
         screen.fill(WHITE)
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
 
         draw_text("Game Over!", title_font, TEXT_COLOR, 275, 100)
+        draw_text("Score: " + str(score), title_font, TEXT_COLOR, 275, 150)
+
+        if(score >= 10 and score < 20):
+            draw_text("Pretty Good Boy", title_font, TEXT_COLOR, 275, 250)
+
+        elif(score == 20):
+            draw_text("Very Good Boy", title_font, TEXT_COLOR, 275, 250)
+
+        elif(score > 20):
+            draw_text("Ken Level Type Boy" + str(score), title_font, TEXT_COLOR, 275, 250)
+        
+        elif(score < 10):
+            draw_text("Bad Boy", title_font, TEXT_COLOR, 275, 250)
+
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Play Again?", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
@@ -95,6 +110,7 @@ def end_screen():
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
                 game_state = "game"
+                floaters = [FloatingObject()]
 
         pygame.display.flip()
         clock.tick(60)
@@ -154,10 +170,12 @@ while running:
                 BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
             if game_state == "End":
-                end_screen()
+                end_screen(score)
 
     screen.fill(BACKGROUND)
+    score = 0
     for floater in floaters:
+        score += 1
         floater.update()
         floater.draw(screen)
 
