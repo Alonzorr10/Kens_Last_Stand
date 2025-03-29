@@ -25,23 +25,22 @@ y = 250
 class FloatingObject:
     def __init__(self, x = None, y = None):
         self.radius = random.randint(10, 30)
-        circSize = random.randint(2, 7)
         # Use provided position or random position
         self.image = pygame.image.load("KenSprite1.png").convert_alpha()
         circSize= random.randint(2,7)
         self.image = pygame.transform.scale(self.image,(self.radius*circSize, self.radius*circSize))
-        #self.rect = self.image.get_rect(center=(self.x, self.y))
         self.x = x if x is not None else random.randint(self.radius, WIDTH - self.radius)
         self.y = y if y is not None else random.randint(self.radius, HEIGHT - self.radius)
+        
         self.speed = random.uniform(0.5, 2.0)
         self.angle = random.uniform(0, 2 * math.pi)
         self.float_offset = 0
         self.float_speed = 0.05
         self.float_amount = 5
         self.scaled_radius = self.radius * circSize
+    
     def update(self):
         self.angle += random.uniform(-0.1, 0.1)
-        
         self.x += math.cos(self.angle) * self.speed
         self.y += math.sin(self.angle) * self.speed
         if self.x < self.scaled_radius or self.x > WIDTH - self.scaled_radius:
@@ -50,14 +49,14 @@ class FloatingObject:
             self.angle = -self.angle
             
     def draw(self, surface):
-        surface.blit(self.image, (int(self.x - self.scaled_radius), (int(self.y + self.float_offset - self.scaled_radius))))
+        surface.blit(self.image, (int(self.x - self.scaled_radius), int(self.y + self.float_offset - self.scaled_radius)))
 
     def is_clicked(self, mouse_pos):
         mx, my = mouse_pos
         # Calculate the distance between the mouse click and the object's center
         distance = math.sqrt((mx - self.x) ** 2 + (my - self.y) ** 2)
-        print(f"Checking click: Object at ({self.x}, {self.y}), Mouse at {mouse_pos}, Distance: {distance}")
         return distance <= self.scaled_radius
+
 floater = FloatingObject()
 floaters = [floater]
 
