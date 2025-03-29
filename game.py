@@ -86,6 +86,7 @@ def end_screen(score):
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
 
+<<<<<<< HEAD
         draw_text("Game Over!", title_font, TEXT_COLOR, 275, 100)
         draw_text("Score: " + str(score), title_font, TEXT_COLOR, 275, 150)
 
@@ -101,6 +102,9 @@ def end_screen(score):
         elif(score < 10):
             draw_text("Bad Boy", title_font, TEXT_COLOR, 275, 250)
 
+=======
+        draw_text("Game Over", title_font, TEXT_COLOR, 230, 100)
+>>>>>>> 5fdbfafc92cdaf7c652bea42b78fb0b238ccfa05
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Play Again?", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
@@ -153,6 +157,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+
             mouse_pos = pygame.mouse.get_pos()
 
             if(counter % 10 == 0):
@@ -161,13 +166,12 @@ while running:
 
             # Check if a floater was clicked
             clicked_object = next((floater for floater in floaters if floater.is_clicked(mouse_pos)), None)
-
-            if clicked_object:  
+            if clicked_object:
                 game_state = "End"
+                end_screen(score)
             else:
+                #score += 1
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
-                counter += 1
-                BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
             if game_state == "End":
                 end_screen(score)
@@ -178,6 +182,8 @@ while running:
         score += 1
         floater.update()
         floater.draw(screen)
+        BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        floater.speed += random.uniform(0.05, 0.05)
 
     pygame.display.flip()
     clock.tick(60)
