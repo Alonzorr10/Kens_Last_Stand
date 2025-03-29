@@ -1,5 +1,8 @@
 import tkinter as tk
-from tkinter import font
+import pygame
+from tkinter import *
 
-
-root = tk.Tk(screenName=None, baseName=None, className='Tk')
+root = Tk()
+w = Label(root, text='Testing')
+w.pack()
+root.mainloop()
