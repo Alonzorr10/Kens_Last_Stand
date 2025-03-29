@@ -147,7 +147,7 @@ def menu_screen():
 
 menu_screen()
 running = True
-counter = 0
+invisible_mode = False
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -159,6 +159,7 @@ while running:
             if(counter % 10 == 0):
                 ken_Sound = mixer.Sound('Assets/good boy.mp3')
                 ken_Sound.play()
+                invisible_mode = not invisible_mode
 
             # Check if a floater was clicked
             clicked_object = next((floater for floater in floaters if floater.is_clicked(mouse_pos)), None)
@@ -177,10 +178,13 @@ while running:
 
     screen.fill(BACKGROUND)
     score = 0
+    counter = 0
     for floater in floaters:
         score += 1
+        counter += 1
         floater.update()
-        floater.draw(screen)
+        if not invisible_mode: 
+            floater.draw(screen)
     pygame.display.flip()
     clock.tick(60)
 
