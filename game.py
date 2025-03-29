@@ -155,8 +155,14 @@ def menu_screen():
         clock.tick(60)
 
 menu_screen()
+
+score = 0
+counter = 0
+
 running = True
 invisible_mode = False
+color_change_time = 0
+color_change_interval = 1000
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -177,25 +183,30 @@ while running:
             if clicked_object:
                 game_state = "End"
                 end_screen(score)
+                score = 0
             else:
-                #score += 1
+                score += 1
+                counter += 1
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
-                BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+                color_change_interval = max(0, 200 - (score // 2))                
                 floater.speed += random.uniform(10, 10)
 
 
             if game_state == "End":
                 end_screen(score)
 
+    color_change_time += clock.get_time()
+    if color_change_time >= color_change_interval:
+        # Change the background color
+        BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        color_change_time = 0
+
     screen.fill(BACKGROUND)
-    score = 0
-    counter = 0
     for floater in floaters:
-        score += 1
-        counter += 1
         floater.update()
         if not invisible_mode: 
             floater.draw(screen)
+    draw_text("Score: " + str(score), font, TEXT_COLOR, 10, 10)
     pygame.display.flip()
     clock.tick(60)
 
