@@ -2,6 +2,7 @@ import random
 import math
 import pygame
 from pygame import mixer
+from pygame import mixer
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
