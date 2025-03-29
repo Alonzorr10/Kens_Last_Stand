@@ -18,36 +18,32 @@ x = 650
 y = 250
 
 class FloatingObject:
-    def __init__(self):
-        self.radius = 20
-        self.x = random.randint(self.radius, WIDTH - self.radius)
-        self.y = random.randint(self.radius, HEIGHT - self.radius)
-        self.speed = 1.5
+    def __init__(self, x = None, y = None):
+        self.radius = random.randint(10, 30)
+        # Use provided position or random position
+        self.x = x if x is not None else random.randint(self.radius, WIDTH - self.radius)
+        self.y = y if y is not None else random.randint(self.radius, HEIGHT - self.radius)
+        self.speed = random.uniform(0.5, 2.0)
         self.angle = random.uniform(0, 2 * math.pi)
         self.float_offset = 0
-        self.float_speed = 0.05
-        self.float_amount = 5
+        self.float_speed = random.uniform(0.02, 0.08)
+        self.float_amount = random.uniform(2, 8)
+        
     def update(self):
         self.angle += random.uniform(-0.1, 0.1)
         
-        
         self.x += math.cos(self.angle) * self.speed
         self.y += math.sin(self.angle) * self.speed
-        
-        
         if self.x < self.radius or self.x > WIDTH - self.radius:
             self.angle = math.pi - self.angle
         if self.y < self.radius or self.y > HEIGHT - self.radius:
             self.angle = -self.angle
             
-        # Floating up and down effect
-        #self.float_offset = math.sin(pygame.time.get_ticks() * self.float_speed) * self.float_amount
-        
     def draw(self, surface):
-        pygame.draw.circle(surface, BLUE, (int(self.x), int(self.y + self.float_offset)), self.radius)
+        #update this to ken face thing 
+        object = pygame.draw.circle(surface, BLUE, (int(self.x), int(self.y + self.float_offset)), self.radius)
 
-floater = FloatingObject()
-
+floaters = []
 
 clock = pygame.time.Clock()
 running = True
@@ -56,13 +52,17 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
-   
-    floater.update()
-    
-    
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                mouse_pos = pygame.mouse.get_pos()
+                floater = FloatingObject(mouse_pos[0], mouse_pos[1])
+                floaters.append(floater)
+
     screen.fill(BACKGROUND)
-    floater.draw(screen)
+
+    for floater in floaters:
+        floater.update()
+        floater.draw(screen)
     
     pygame.display.flip()
     clock.tick(60)
