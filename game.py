@@ -86,25 +86,21 @@ def end_screen(score):
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
 
-<<<<<<< HEAD
         draw_text("Game Over!", title_font, TEXT_COLOR, 275, 100)
         draw_text("Score: " + str(score), title_font, TEXT_COLOR, 275, 150)
 
         if(score >= 10 and score < 20):
-            draw_text("Pretty Good Boy", title_font, TEXT_COLOR, 275, 250)
+            draw_text("Pretty Good Boy", title_font, TEXT_COLOR, 275, 185)
 
         elif(score == 20):
-            draw_text("Very Good Boy", title_font, TEXT_COLOR, 275, 250)
+            draw_text("Very Good Boy", title_font, TEXT_COLOR, 275, 185)
 
         elif(score > 20):
-            draw_text("Ken Level Type Boy" + str(score), title_font, TEXT_COLOR, 275, 250)
+            draw_text("Ken Level Type Boy" + str(score), title_font, TEXT_COLOR, 275, 185)
         
         elif(score < 10):
-            draw_text("Bad Boy", title_font, TEXT_COLOR, 275, 250)
+            draw_text("Bad Boy", title_font, TEXT_COLOR, 275, 185)
 
-=======
-        draw_text("Game Over", title_font, TEXT_COLOR, 230, 100)
->>>>>>> 5fdbfafc92cdaf7c652bea42b78fb0b238ccfa05
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Play Again?", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
