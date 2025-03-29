@@ -96,7 +96,7 @@ def end_screen(score):
             draw_text("Very Good Boy", title_font, TEXT_COLOR, 275, 185)
 
         elif(score > 20):
-            draw_text("Ken Level Type Boy" + str(score), title_font, TEXT_COLOR, 275, 185)
+            draw_text("Ken Level Type Boy", title_font, TEXT_COLOR, 275, 185)
         
         elif(score < 10):
             draw_text("Bad Boy", title_font, TEXT_COLOR, 275, 185)
@@ -159,7 +159,9 @@ while running:
             if(counter % 10 == 0):
                 ken_Sound = mixer.Sound('Assets/good boy.mp3')
                 ken_Sound.play()
-                invisible_mode = not invisible_mode
+                invisible_mode = True
+            else:
+                invisible_mode = False
 
             # Check if a floater was clicked
             clicked_object = next((floater for floater in floaters if floater.is_clicked(mouse_pos)), None)
