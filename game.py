@@ -26,6 +26,9 @@ class FloatingObject:
         self.float_offset = 0
         self.float_speed = 0.05
         self.float_amount = 5
+        # Load the image
+        self.image = pygame.image.load("Assets/KenSprite1.png")
+        self.image = pygame.transform.scale(self.image, (self.radius * 2, self.radius * 2))
     def update(self):
         self.angle += random.uniform(-0.1, 0.1)
         
@@ -43,7 +46,8 @@ class FloatingObject:
         #self.float_offset = math.sin(pygame.time.get_ticks() * self.float_speed) * self.float_amount
         
     def draw(self, surface):
-        pygame.draw.circle(surface, BLUE, (int(self.x), int(self.y + self.float_offset)), self.radius)
+        #pygame.draw.circle(surface, BLUE, (int(self.x), int(self.y + self.float_offset)), self.radius)
+        surface.blit(self.image, (int(self.x - self.radius), (int(self.y + self.float_offset - self.radius))))
 
 floater = FloatingObject()
 
