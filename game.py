@@ -30,7 +30,7 @@ class FloatingObject:
         # Use provided position or random position
         self.x = x if x is not None else random.randint(self.radius, WIDTH - self.radius)
         self.y = y if y is not None else random.randint(self.radius, HEIGHT - self.radius)
-        #self.speed = random.uniform(0.5, 2.0)
+        self.speed = random.uniform(0.5, 2.0)
         self.angle = random.uniform(0, 2 * math.pi)
         self.float_offset = 0
         self.float_speed = random.uniform(0.02, 0.08)
@@ -50,7 +50,7 @@ class FloatingObject:
         surface.blit(self.image, (int(self.x - self.radius), (int(self.y + self.float_offset - self.radius))))
 
 floater = FloatingObject()
-
+floaters = []
 
 clock = pygame.time.Clock()
 running = True
