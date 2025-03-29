@@ -11,7 +11,12 @@ pygame.display.set_caption("Ken's Last Stand")
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 BACKGROUND = (240, 240, 240)
+BUTTON_COLOR = (100, 100, 255)
+BUTTON_HOVER_COLOR = (150, 150, 255)
+TEXT_COLOR = (0, 0, 0)
 gradient = random.randrange(5, 11)
+game_state = "Menu"
+font = pygame.font.Font(None, 30)
 clock = pygame.time.Clock()
 x = 650
 y = 250
@@ -50,6 +55,37 @@ class FloatingObject:
 floater = FloatingObject()
 floaters = []
 
+button_rect = pygame.Rect(WIDTH // 2 - 75, HEIGHT // 2, 150, 50)
+def draw_text(text, font, color, x, y):
+    img = font.render(text, True, color)
+    screen.blit(img, (x, y))
+
+def menu_screen():
+    global game_state
+    while game_state == "Menu":
+        screen.fill(WHITE)
+
+        # Check if mouse is over the button
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
+
+        # Draw button
+        pygame.draw.rect(screen, button_color, button_rect)
+        draw_text("Start Game", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 10)
+
+        # Event handling
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button_rect.collidepoint(event.pos):
+                    game_state = "game"  # Switch to game state
+
+        pygame.display.flip()
+        clock.tick(60)
+
+menu_screen()
 clock = pygame.time.Clock()
 running = True
 
