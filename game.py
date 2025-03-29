@@ -131,13 +131,17 @@ def menu_screen():
 
 menu_screen()
 running = True
-
+counter = 0
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             mouse_pos = pygame.mouse.get_pos()
+
+            if(counter % 10 == 0):
+                ken_Sound = mixer.Sound('Assets/good boy.mp3')
+                ken_Sound.play()
 
             # Check if a floater was clicked
             clicked_object = next((floater for floater in floaters if floater.is_clicked(mouse_pos)), None)
@@ -146,6 +150,7 @@ while running:
                 game_state = "End"
             else:
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
+                counter += 1
 
             if game_state == "End":
                 end_screen()
