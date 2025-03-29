@@ -1,6 +1,7 @@
 import random
 import math
 import pygame
+from pygame import mixer
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -61,6 +62,9 @@ def draw_text(text, font, color, x, y):
     screen.blit(img, (x, y))
 
 def menu_screen():
+
+    mixer.music.load('funky town low quality.mp3') # Plays the music in a loop in the menu screen
+    mixer.music.play(-1)
     global game_state
     while game_state == "Menu":
         screen.fill(WHITE)
@@ -73,12 +77,16 @@ def menu_screen():
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Start Game", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 10)
 
+        
+
         # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                mixer.music.load('funky town low quality.mp3') # Music will stop once the Start Game button has been pressed
+                mixer.music.stop
                 if button_rect.collidepoint(event.pos):
                     game_state = "game"  # Switch to game state
 
@@ -88,7 +96,7 @@ def menu_screen():
 menu_screen()
 clock = pygame.time.Clock()
 running = True
-
+counter = 0
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -98,6 +106,13 @@ while running:
                 mouse_pos = pygame.mouse.get_pos()
                 floater = FloatingObject(mouse_pos[0], mouse_pos[1])
                 floaters.append(floater)
+                counter += 1  #Combo Sound Effect
+                if counter % 10 == 0:
+                    ken_Sound = mixer.Sound('good boy.mp3')
+                    ken_Sound.play()
+
+                
+            
 
     screen.fill(BACKGROUND)
 
