@@ -151,6 +151,7 @@ while running:
             else:
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
                 counter += 1
+                BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
             if game_state == "End":
                 end_screen()
