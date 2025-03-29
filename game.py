@@ -26,7 +26,16 @@ class FloatingObject:
         #self.rect = self.image.get_rect(center=(self.x, self.y))
         self.x = x if x is not None else random.randint(self.radius, WIDTH - self.radius)
         self.y = y if y is not None else random.randint(self.radius, HEIGHT - self.radius)
-        self.speed = random.uniform(0.5, 2.0)
+
+        if circSize < 8 and circSize >= 5:
+            self.speed = 2
+        if circSize < 5 and circSize >= 3:
+            self.speed = 1
+        if circSize < 3 and circSize >= 2:
+            self.speed = .5
+        
+
+        #self.speed = random.uniform(0.5, 2.0)
         self.angle = random.uniform(0, 2 * math.pi)
         self.float_offset = 0
         self.float_speed = 0.05
