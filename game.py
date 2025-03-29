@@ -217,6 +217,8 @@ while running:
         floater.update()
         if not invisible_mode: 
             floater.draw(screen)
+        else:
+            draw_text("Invisible time :)", title_font, TITLE_TEXT_COLOR, 230, 150)
     draw_text("Score: " + str(score), font, TEXT_COLOR, 10, 10)
     pygame.display.flip()
     clock.tick(60)
