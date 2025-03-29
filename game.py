@@ -162,6 +162,7 @@ while running:
         score += 1
         floater.update()
         floater.draw(screen)
+        BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         floater.speed += random.uniform(0.05, 0.05)
 
     pygame.display.flip()
