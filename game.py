@@ -160,6 +160,7 @@ while running:
     for floater in floaters:
         floater.update()
         floater.draw(screen)
+        floater.speed += random.uniform(0.05, 0.05)
 
     pygame.display.flip()
     clock.tick(60)
