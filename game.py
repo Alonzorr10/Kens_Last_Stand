@@ -1,6 +1,8 @@
 import random
 import math
 import pygame
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -12,8 +14,11 @@ WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 BACKGROUND = (240, 240, 240)
 BUTTON_COLOR = (100, 100, 255)
+END_BUTTON_COLOR = (199, 0, 57)
 BUTTON_HOVER_COLOR = (150, 150, 255)
-TEXT_COLOR = (0, 0, 0)
+END_BUTTON_HOVER_COLOR = (255, 87, 51 )
+TEXT_COLOR = (255, 255, 255)
+END_TEXT_COLOR = (0, 0, 0)
 gradient = random.randrange(5, 11)
 game_state = "Menu"
 font = pygame.font.Font(None, 30)
@@ -27,7 +32,9 @@ class FloatingObject:
         self.radius = random.randint(10, 30)
         circSize = random.randint(2, 7)
         # Use provided position or random position
-        self.image = pygame.image.load("KenSprite1.png").convert_alpha()
+        filename = ["Assets/download-_1_.png","Assets/download.png", "Assets/KenSprite1.png"]
+        random_img = random.choice(filename)
+        self.image = pygame.image.load(random_img).convert_alpha()
         circSize= random.randint(2,7)
         self.image = pygame.transform.scale(self.image,(self.radius*circSize, self.radius*circSize))
         #self.rect = self.image.get_rect(center=(self.x, self.y))
@@ -82,12 +89,12 @@ def end_screen():
         screen.fill(WHITE)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
+        button_color = END_BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else END_BUTTON_COLOR
 
-        draw_text("Game Over", title_font, TEXT_COLOR, 230, 100)
+        draw_text("Game Over!", title_font, END_TEXT_COLOR, 275, 100)
 
         pygame.draw.rect(screen, button_color, button_rect)
-        draw_text("Play Again?", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
+        draw_text("Play Again?", font, END_TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
         # Event handling
         for event in pygame.event.get():
