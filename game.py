@@ -5,7 +5,7 @@ import pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Floating object")
+pygame.display.set_caption("Ken's Last Stand")
 
 #colors for background 
 WHITE = (255, 255, 255)
