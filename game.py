@@ -22,11 +22,23 @@ class FloatingObject:
         # Use provided position or random position
         self.x = x if x is not None else random.randint(self.radius, WIDTH - self.radius)
         self.y = y if y is not None else random.randint(self.radius, HEIGHT - self.radius)
-        self.speed = random.uniform(0.5, 2.0)
+        #self.speed = random.uniform(0.5, 2.0)
         self.angle = random.uniform(0, 2 * math.pi)
         self.float_offset = 0
-        self.float_speed = random.uniform(0.02, 0.08)
+        # if self.radius <= 30:
+        #     self.speed = 5
+
+        # if self.radius < 25 and self.radius > 20:
+        #     self.speed = 3
+
+        # if self.radius < 20 and self.radius > 15:
+        #     self.speed = 2
+
+        # if self.radius < 15 and self.radius >= 10:
+        #     self.speed = 0.5
+        self.speed = random.uniform(0.5, 2.0)
         self.float_amount = random.uniform(2, 8)
+        self.float_speed = random.uniform(0.02, 0.08)
         
     def update(self):
         self.angle += random.uniform(-0.1, 0.1)
