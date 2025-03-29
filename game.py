@@ -168,6 +168,9 @@ while running:
             else:
                 #score += 1
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
+                BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+                floater.speed += random.uniform(10, 10)
+
 
             if game_state == "End":
                 end_screen(score)
@@ -178,9 +181,6 @@ while running:
         score += 1
         floater.update()
         floater.draw(screen)
-        BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-        floater.speed += random.uniform(0.05, 0.05)
-
     pygame.display.flip()
     clock.tick(60)
 
