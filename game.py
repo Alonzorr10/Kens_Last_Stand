@@ -28,6 +28,10 @@ class FloatingObject:
     def __init__(self, x = None, y = None):
         self.radius = random.randint(10, 30)
         # Use provided position or random position
+        self.image = pygame.image.load("KenSprite1.png").convert_alpha()
+        circSize= random.randint(2,7)
+        self.image = pygame.transform.scale(self.image,(self.radius*circSize, self.radius*circSize))
+        #self.rect = self.image.get_rect(center=(self.x, self.y))
         self.x = x if x is not None else random.randint(self.radius, WIDTH - self.radius)
         self.y = y if y is not None else random.randint(self.radius, HEIGHT - self.radius)
         self.speed = random.uniform(0.5, 2.0)
@@ -49,7 +53,7 @@ class FloatingObject:
     def draw(self, surface):
         surface.blit(self.image, (int(self.x - self.radius), (int(self.y + self.float_offset - self.radius))))
 
-floater = FloatingObject()
+#floater = FloatingObject()
 floaters = []
 
 clock = pygame.time.Clock()
