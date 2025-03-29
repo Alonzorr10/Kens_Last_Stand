@@ -57,9 +57,10 @@ class FloatingObject:
         mx, my = mouse_pos
         # Calculate the distance between the mouse click and the object's center
         distance = math.sqrt((mx - self.x) ** 2 + (my - self.y) ** 2)
+        print(f"Checking click: Object at ({self.x}, {self.y}), Mouse at {mouse_pos}, Distance: {distance}")
         return distance <= self.radius
 floater = FloatingObject()
-floaters = []
+floaters = [floater]
 
 button_rect = pygame.Rect(WIDTH // 2 - 75, HEIGHT // 2, 150, 50)
 def draw_text(text, font, color, x, y):
