@@ -11,18 +11,10 @@ pygame.display.set_caption("Ken's Last Stand")
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 BACKGROUND = (240, 240, 240)
-BUTTON_COLOR = (100, 100, 255)
-BUTTON_HOVER_COLOR = (150, 150, 255)
-TEXT_COLOR = (0, 0, 0)
 gradient = random.randrange(5, 11)
 clock = pygame.time.Clock()
 x = 650
 y = 250
-
-game_state = "Menu"
-font = pygame.font.Font(None, 36)
-clock = pygame.time.Clock()
-
 
 class FloatingObject:
     def __init__(self, x = None, y = None):
@@ -30,14 +22,14 @@ class FloatingObject:
         # Use provided position or random position
         self.x = x if x is not None else random.randint(self.radius, WIDTH - self.radius)
         self.y = y if y is not None else random.randint(self.radius, HEIGHT - self.radius)
-        #self.speed = random.uniform(0.5, 2.0)
+        self.speed = random.uniform(0.5, 2.0)
         self.angle = random.uniform(0, 2 * math.pi)
         self.float_offset = 0
-        self.float_speed = random.uniform(0.02, 0.08)
-        self.float_amount = random.uniform(2, 8)
-        
-        self.image = pygame.image.load("Assets/your_image.png")  # Replace with the actual path to your image
-        self.image = pygame.transform.scale(self.image, (self.radius * 2, self.radius * 2))  # Resize image to match the radius
+        self.float_speed = 0.05
+        self.float_amount = 5
+        # Load the image
+        self.image = pygame.image.load("Assets/KenSprite1.png")
+        self.image = pygame.transform.scale(self.image, (self.radius * 2, self.radius * 2))
     def update(self):
         self.angle += random.uniform(-0.1, 0.1)
         
@@ -53,6 +45,7 @@ class FloatingObject:
 
 floater = FloatingObject()
 
+floaters = []
 
 clock = pygame.time.Clock()
 running = True
@@ -77,7 +70,3 @@ while running:
     clock.tick(60)
 
 pygame.quit()
-
-
-
-
