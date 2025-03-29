@@ -36,6 +36,8 @@ class FloatingObject:
         self.float_speed = random.uniform(0.02, 0.08)
         self.float_amount = random.uniform(2, 8)
         
+        self.image = pygame.image.load("Assets/your_image.png")  # Replace with the actual path to your image
+        self.image = pygame.transform.scale(self.image, (self.radius * 2, self.radius * 2))  # Resize image to match the radius
     def update(self):
         self.angle += random.uniform(-0.1, 0.1)
         
