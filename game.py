@@ -17,6 +17,7 @@ TEXT_COLOR = (0, 0, 0)
 gradient = random.randrange(5, 11)
 game_state = "Menu"
 font = pygame.font.Font(None, 30)
+title_font = pygame.font.SysFont('Comic-Sans', 45)
 clock = pygame.time.Clock()
 x = 650
 y = 250
@@ -67,16 +68,21 @@ def draw_text(text, font, color, x, y):
 
 def menu_screen():
     global game_state
+    bg_img = pygame.image.load("Assets/KenSprite1.png")
+    bg_img = pygame.transform.scale(bg_img, (WIDTH, HEIGHT))
     while game_state == "Menu":
-        screen.fill(WHITE)
+        screen.blit(bg_img, (0, 0))
 
         # Check if mouse is over the button
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
 
+        #Title Text
+        draw_text("Ken's Last Stand", title_font, TEXT_COLOR, 230, 100)
+
         # Draw button
         pygame.draw.rect(screen, button_color, button_rect)
-        draw_text("Start Game", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 10)
+        draw_text("Start Game", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
         # Event handling
         for event in pygame.event.get():
