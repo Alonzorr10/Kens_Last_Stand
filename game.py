@@ -28,7 +28,9 @@ class FloatingObject:
         self.scaled_radius = self.radius * circSize  # Final object size
 
         # Load and scale image
-        self.image = pygame.image.load("KenSprite1.png").convert_alpha()
+        filenames = ["Assets/KenSprite1.png", "Assets/KenSprite2.png", "Assets/KenSprite3.png"]
+        random_image = random.choice(filenames)
+        self.image = pygame.image.load(random_image).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.scaled_radius, self.scaled_radius))
 
         # Set initial position
