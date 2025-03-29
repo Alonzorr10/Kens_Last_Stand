@@ -1,6 +1,7 @@
 import random
 import math
 import pygame
+from pygame import mixer
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -13,6 +14,7 @@ BACKGROUND = (240, 240, 240)
 BUTTON_COLOR = (100, 100, 255)
 BUTTON_HOVER_COLOR = (150, 150, 255)
 TEXT_COLOR = (0, 0, 0)
+TITLE_TEXT_COLOR = (255, 255, 255)
 
 game_state = "Menu"
 font = pygame.font.Font(None, 30)
@@ -26,7 +28,9 @@ class FloatingObject:
         self.scaled_radius = self.radius * circSize  # Final object size
 
         # Load and scale image
-        self.image = pygame.image.load("KenSprite1.png").convert_alpha()
+        filenames = ["Assets/KenSprite1.png", "Assets/KenSprite2.png", "Assets/KenSprite3.png"]
+        random_image = random.choice(filenames)
+        self.image = pygame.image.load(random_image).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.scaled_radius, self.scaled_radius))
 
         # Set initial position
@@ -81,7 +85,7 @@ def end_screen(score):
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
 
-        draw_text("Game Over, score is:" + str(score), title_font, TEXT_COLOR, 230, 100)
+        draw_text("Game Over", title_font, TEXT_COLOR, 230, 100)
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Play Again?", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
@@ -97,6 +101,9 @@ def end_screen(score):
 
 def menu_screen():
     """Main menu screen."""
+
+    mixer.music.load('Assets/funky town low quality.mp3')
+    mixer.music.play(-1)
     global game_state
     bg_img = pygame.image.load("Assets/KenSprite1.png")
     bg_img = pygame.transform.scale(bg_img, (WIDTH, HEIGHT))
@@ -106,7 +113,7 @@ def menu_screen():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_color = BUTTON_HOVER_COLOR if button_rect.collidepoint(mouse_x, mouse_y) else BUTTON_COLOR
 
-        draw_text("Ken's Last Stand", title_font, TEXT_COLOR, 230, 100)
+        draw_text("Ken's Last Stand", title_font, TITLE_TEXT_COLOR, 230, 100)
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Start Game", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
 
@@ -115,6 +122,8 @@ def menu_screen():
                 pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
+                mixer.music.load('Assets/funky town low quality.mp3')
+                mixer.music.stop
                 game_state = "game"
 
         pygame.display.flip()
@@ -122,7 +131,7 @@ def menu_screen():
 
 menu_screen()
 running = True
-
+counter = 0
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -130,6 +139,10 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
 
             mouse_pos = pygame.mouse.get_pos()
+
+            if(counter % 10 == 0):
+                ken_Sound = mixer.Sound('Assets/good boy.mp3')
+                ken_Sound.play()
 
             # Check if a floater was clicked
             clicked_object = next((floater for floater in floaters if floater.is_clicked(mouse_pos)), None)
@@ -139,9 +152,9 @@ while running:
             else:
                 #score += 1
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
-                
-            # if game_state == "End":
-            #     end_screen(score)
+
+            if game_state == "End":
+                end_screen()
 
     screen.fill(BACKGROUND)
     score = 0
