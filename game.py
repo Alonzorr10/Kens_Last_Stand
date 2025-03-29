@@ -41,7 +41,6 @@ class FloatingObject:
             self.angle = -self.angle
             
     def draw(self, surface):
-        #pygame.draw.circle(surface, BLUE, (int(self.x), int(self.y + self.float_offset)), self.radius)
         surface.blit(self.image, (int(self.x - self.radius), (int(self.y + self.float_offset - self.radius))))
 
 floater = FloatingObject()
