@@ -52,6 +52,11 @@ class FloatingObject:
     def draw(self, surface):
         surface.blit(self.image, (int(self.x - self.radius), (int(self.y + self.float_offset - self.radius))))
 
+    def is_clicked(self, mouse_pos):
+        mx, my = mouse_pos
+        # Calculate the distance between the mouse click and the object's center
+        distance = math.sqrt((mx - self.x) ** 2 + (my - self.y) ** 2)
+        return distance <= self.radius
 floater = FloatingObject()
 floaters = []
 
@@ -89,6 +94,8 @@ menu_screen()
 clock = pygame.time.Clock()
 running = True
 
+click_just_happened = False
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -98,6 +105,23 @@ while running:
                 mouse_pos = pygame.mouse.get_pos()
                 floater = FloatingObject(mouse_pos[0], mouse_pos[1])
                 floaters.append(floater)
+
+                if not click_just_happened:
+                    floater = FloatingObject(mouse_pos[0], mouse_pos[1])
+                    floaters.append(floater)
+                    click_just_happened = True  # Set the flag to prevent immediate check
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                # Reset the flag when the mouse button is released
+                click_just_happened = False
+        # Check if any floating object was clicked
+    if not click_just_happened:
+        for floater in floaters:
+            if floater.is_clicked(mouse_pos):
+                # End the game if an object is clicked
+                running = False
+                break  # Exit the loop once the game is set to end
 
     screen.fill(BACKGROUND)
 
