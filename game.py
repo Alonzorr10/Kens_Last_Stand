@@ -98,16 +98,19 @@ def end_screen(score):
         draw_text("High Score: " + str(high_score), title_font, TEXT_COLOR, 275, 240)
 
         if(score >= 10 and score < 20):
-            draw_text("Pretty Good Boy", title_font, TEXT_COLOR, 275, 185)
+            draw_text("Pretty Good Boy", title_font, TEXT_COLOR, 275, 190)
 
         elif(score == 20):
-            draw_text("Very Good Boy", title_font, TEXT_COLOR, 275, 185)
+            draw_text("Very Good Boy", title_font, TEXT_COLOR, 275, 190)
 
         elif(score > 20):
-            draw_text("Ken Level Type Boy", title_font, TEXT_COLOR, 275, 185)
+            draw_text("Ken Level Type Boy", title_font, TEXT_COLOR, 275, 190)
         
         elif(score < 10):
-            draw_text("Bad Boy", title_font, TEXT_COLOR, 275, 185)
+            draw_text("Bad Boy", title_font, TEXT_COLOR, 275, 190)
+
+        if(score < high_score):
+            draw_text("damn...", title_font, TEXT_COLOR, 275, 380)
 
         pygame.draw.rect(screen, button_color, button_rect)
         draw_text("Play Again?", font, TEXT_COLOR, WIDTH // 2 - 55, HEIGHT // 2 + 14)
@@ -159,6 +162,8 @@ running = True
 invisible_mode = False
 while running:
     for event in pygame.event.get():
+        mixer.music.load('Assets/bgm.mp3')
+        mixer.music.play(-1)
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -176,9 +181,11 @@ while running:
             clicked_object = next((floater for floater in floaters if floater.is_clicked(mouse_pos)), None)
             if clicked_object:
                 game_state = "End"
+                mixer.music.stop()
                 end_screen(score)
             else:
                 #score += 1
+                mixer.music.load('Assets/bgm.mp3')
                 floaters.append(FloatingObject(mouse_pos[0], mouse_pos[1]))
                 BACKGROUND = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
                 floater.speed += random.uniform(10, 10)
