@@ -103,25 +103,20 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 mouse_pos = pygame.mouse.get_pos()
-                floater = FloatingObject(mouse_pos[0], mouse_pos[1])
-                floaters.append(floater)
+                #floater = FloatingObject(mouse_pos[0], mouse_pos[1])
+                #floaters.append(floater)
 
-                if not click_just_happened:
+                clicked_object = None
+                for floater in floaters:
+                    if floater.is_clicked(mouse_pos):
+                        clicked_object = floater
+                        break
+
+                if clicked_object:  # If an object was clicked, end the game
+                    running = False
+                else:  # If no object was clicked, create a new object
                     floater = FloatingObject(mouse_pos[0], mouse_pos[1])
                     floaters.append(floater)
-                    click_just_happened = True  # Set the flag to prevent immediate check
-
-        if event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                # Reset the flag when the mouse button is released
-                click_just_happened = False
-        # Check if any floating object was clicked
-    if not click_just_happened:
-        for floater in floaters:
-            if floater.is_clicked(mouse_pos):
-                # End the game if an object is clicked
-                running = False
-                break  # Exit the loop once the game is set to end
 
     screen.fill(BACKGROUND)
 
